@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>General Knowledge Quiz</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .question {
+        display: none;
+      }
+      #result {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div
+      class="container-fluid p-5 d-flex flex-column col col-md-8 mx-auto justify-content-between vh-100"
+    >
+      <h2 class="text-center">Interactive Quiz</h2>
+      <div
+        id="quiz-container"
+        class="border border-secondary rounded-5 p-5 bg-warning text-center"
+      >
+        <label id="question-label" for="answer"></label><br />
+      </div>
+      <div id="result">
+        <h3>Congratulations! You have completed the quiz.</h3>
+      </div>
+      <div class="row">
+        <input
+          class="form-control mb-3"
+          type="text"
+          id="answer"
+          name="answer"
+        /><br />
+        <button class="btn btn-success" id="submit-button">Submit</button
+        ><br /><br />
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      const questions = [
+        { question: 'What is the capital city of Japan?', answer: 'Tokyo' },
+        {
+          question: 'Which planet is known as the Red Planet?',
+          answer: 'Mars',
+        },
+        { question: 'What is the smallest prime number?', answer: '2' },
+        {
+          question: 'What is the hardest natural substance on Earth?',
+          answer: 'Diamond',
+        },
+        { question: 'In which year did the Titanic sink?', answer: '1912' },
+      ];
+
+      let currentQuestionIndex = 0;
+
+      document
+        .getElementById('submit-button')
+        .addEventListener('click', function () {
+          checkAnswer();
+        });
+
+      function showQuestion(index) {
+        if (index < questions.length) {
+          const questionData = questions[index];
+          document.getElementById('question-label').innerText =
+            index + 1 + '. ' + questionData.question;
+          document.getElementById('answer').value = '';
+          document.getElementById('quiz-container').style.display = 'block';
+        } else {
+          document.getElementById('quiz-container').style.display = 'none';
+          document.getElementById('result').style.display = 'block';
+        }
+      }
+
+      function checkAnswer() {
+        const inputBox = document.querySelector('.form-control');
+        const userAnswer = document.getElementById('answer').value.trim();
+        const correctAnswer = questions[currentQuestionIndex].answer;
+
+        if (userAnswer.toLowerCase() === correctAnswer.toLowerCase()) {
+          inputBox.classList.remove('is-invalid');
+
+          currentQuestionIndex++;
+          showQuestion(currentQuestionIndex);
+        } else {
+          inputBox.classList.add('is-invalid');
+        }
+      }
+
+      showQuestion(currentQuestionIndex);
+    </script>
+  </body>
+</html>
